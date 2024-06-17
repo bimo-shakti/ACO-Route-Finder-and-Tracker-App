@@ -1,77 +1,191 @@
-import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Colors from '../../Utils/Colors';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, Button } from 'react-native';
+import Colors from '../../Utils/Colors';   
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { ScrollView, TextInput } from 'react-native-gesture-handler';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from '@firebase/auth';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-export default function LoginScreen ({promptAsync}) {
+const firebaseConfig = {
+  apiKey: "AIzaSyCmFJQSmTjhWcuVsgsqdo-dm_CRvB4setI",
+  authDomain: "sign-in-route-finder.firebaseapp.com",
+  projectId: "sign-in-route-finder",
+  storageBucket: "sign-in-route-finder.appspot.com",
+  messagingSenderId: "346143411697",
+  appId: "1:346143411697:web:576dab060a1d33e5fac850"
+};
+const app = initializeApp(firebaseConfig);
 
+const AuthScreen = ({ email, setEmail, password, setPassword, isLogin, setIsLogin, handleAuthentication }) => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Route Finder</Text>
-      <Image source={require('./../../../assets/images/logo.png')} style={styles.logoImage} />
-      <View style={styles.textContainer}>
-        <Text style={styles.heading}>ACO-Based Route Finder</Text>
-        <Text style={styles.subheading}>Find your best route using ACO Algorithm</Text>
-        <Text style={styles.subheading2}>with your own device!</Text>
-        <TouchableOpacity style={styles.button} 
-        onPress={()=>promptAsync() }>
-          <Text style={styles.buttonText}>Sign In With Google!</Text>
-        </TouchableOpacity>
+    <SafeAreaView>
+   
+    <View style={styles.authContainer}>
+       <Text style={styles.title}>{isLogin ? 'Sign In' : 'Sign Up'}</Text>
+
+       <TextInput
+        style={styles.input}
+        value={email}
+        onChangeText={setEmail}
+        placeholder="Email"
+        autoCapitalize="none"
+      />
+      <TextInput
+        style={styles.input}
+        value={password}
+        onChangeText={setPassword}
+        placeholder="Password"
+        secureTextEntry
+      />
+      <View style={styles.buttonContainer}>
+        <Button style={styles.buttonTitle} title={isLogin ? 'Sign In' : 'Sign Up'} onPress={handleAuthentication} color="#D1D8C5" />
+      </View>
+
+      <View style={styles.bottomContainer}>
+        <Text style={styles.toggleText} onPress={() => setIsLogin(!isLogin)}>
+          {isLogin ? 'Need an account? Sign Up' : 'Already have an account? Sign In'}
+        </Text>
       </View>
     </View>
+    </SafeAreaView>
   );
 }
 
+
+const AuthenticatedScreen = ({ user, handleAuthentication }) => {
+  return (
+    <View style={styles.authContainer}>
+      <Text style={styles.title}>Welcome</Text>
+      <Text style={styles.emailText}>{user.email}</Text>
+      <Button style={styles.buttonTitle} title="Logout" onPress={handleAuthentication} color="#e74c3c" />
+    </View>
+  );
+};
+
+export default function LoginScreen  () {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [user, setUser] = useState(null); // Track user authentication state
+  const [isLogin, setIsLogin] = useState(true);
+
+  const auth = getAuth(app);
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user);
+    });
+
+    return () => unsubscribe();
+  }, [auth]);
+
+  
+  const handleAuthentication = async () => {
+    try {
+      if (user) {
+        // If user is already authenticated, log out
+        console.log('User logged out successfully!');
+        await signOut(auth);
+      } else {
+        // Sign in or sign up
+        if (isLogin) {
+          // Sign in
+          await signInWithEmailAndPassword(auth, email, password);
+          console.log('User signed in successfully!');
+        } else {
+          // Sign up
+          await createUserWithEmailAndPassword(auth, email, password);
+          console.log('User created successfully!');
+        }
+      }
+    } catch (error) {
+      console.error('Authentication error:', error.message);
+    }
+  };
+
+  return (
+    <ScrollView contentContainerStyle={styles.container}>
+      {user ? (
+        // Show user's email if user is authenticated
+        <AuthenticatedScreen user={user} handleAuthentication={handleAuthentication} />
+      ) : (
+        // Show sign-in or sign-up form if user is not authenticated
+        <AuthScreen
+          email={email}
+          setEmail={setEmail}
+          password={password}
+          setPassword={setPassword}
+          isLogin={isLogin}
+          setIsLogin={setIsLogin}
+          handleAuthentication={handleAuthentication}
+        />
+      )}
+    </ScrollView>
+  );
+}
+
+
 const styles = StyleSheet.create({
   container: {
-    display: 'flex',
+    flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 0,
+    padding: 16,
+    backgroundColor: Colors.PRIMARY,
   },
-  logoImage: {
-    width: 400,
-    height: 300,
-    objectFit: 'contain',
+  judul: {
+
   },
-  header: {
-    fontSize: 33,
-    fontFamily: 'ReadexPro-bold',
-    textAlign: 'center',
-    marginTop: 30,
+  applogo:{
+
   },
-  textContainer: {
-    padding: 0,
+  
+  authContainer: {
+    width: '80%',
+    maxWidth: 400,
+    backgroundColor:Colors.GRAY,
+    padding: 17,
+    borderRadius: 10,
+    elevation: 10,
   },
-  heading: {
-    fontSize: 20,
-    fontFamily: 'ReadexPro-bold',
-    textAlign: 'center',
-    marginTop: 0,
-  },
-  subheading: {
-    fontSize: 13,
-    fontFamily: 'ReadexPro',
-    textAlign: 'center',
-    marginTop: 5,
-  },
-  subheading2: {
-    fontSize: 14,
-    fontFamily: 'ReadexPro',
-    textAlign: 'center',
-    marginTop: 0,
+  title: {
+    fontSize: 23,
     color: Colors.BLACK,
+    fontFamily:'ReadexPro-medium',
+    marginBottom: 15,
+    textAlign: 'center',
   },
-  button: {
+  input: {
+    fontFamily: 'ReadexPro',
+    height: 40,
     backgroundColor: Colors.BLUEGREEN,
-    padding: 14,
-    display: 'flex',
+    borderColor: Colors.BLUEGREEN,
+    borderWidth: 2,
+    marginBottom: 16,
+    padding: 8,
     borderRadius: 99,
+  },
+  buttonContainer: {
+    fontFamily: 'ReadexPro',
+    color: Colors.BLACK,
+    marginBottom: 3,
+  },
+  toggleText: {
+    
+    color: Colors.WHITE,
+    fontFamily: 'ReadexPro-medium',
+    textAlign: 'center',
+  },
+  bottomContainer: {
     marginTop: 20,
   },
-  buttonText: {
-    color: Colors.BLACK,
+  emailText: {
+    fontSize: 18,
     textAlign: 'center',
-    fontFamily: 'ReadexPro-medium',
-    fontSize: 13,
+    marginBottom: 20,
   },
+  buttonTitle: {
+    fontFamily:'ReadexPro',
+    fontSize: 18,
+    color : Colors.BLACK
+  }
 });
