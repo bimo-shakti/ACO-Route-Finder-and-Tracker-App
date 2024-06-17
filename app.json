@@ -1,5 +1,6 @@
 {
   "expo": {
+    "scheme": "aco-route-finder-and-tracker-app",
     "name": "ACO-Route-Finder-and-Tracker-App",
     "slug": "ACO-Route-Finder-and-Tracker-App",
     "version": "1.0.0",
@@ -18,10 +19,19 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.bimo_shakti.ACORouteFinderandTrackerApp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-font"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "be8f78b4-d446-44c2-a236-2da613d539f3"
+      }
     }
   }
 }

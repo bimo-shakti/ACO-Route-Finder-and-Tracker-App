@@ -1,0 +1,9 @@
+export default{
+    PRIMARY:'#EEEEEE',
+    BLUEGREEN:'#7AB2B2',
+    GRAY:'#D1D8C5',
+    DARKBLUE:'#615EFC',
+    LIGHTBLUE:'#7E8EF1',
+    WHITE:'#FFFFFF',
+    BLACK:'#000000'
+}
