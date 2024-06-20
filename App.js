@@ -8,6 +8,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import LandingPage from './App/Screen/LandingPage/LandingPage';
 import LoginScreen from './App/Screen/LoginScreen/LoginScreen';
 import Colors from './App/Utils/Colors';
+import HomeScreen from './App/Screen/HomeScreen/HomeScreen';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -34,10 +35,17 @@ export default function App() {
     <View style={styles.container} onLayout={onLayoutRootView}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Login">
+      
+          
           <Stack.Group>
-          <Stack.Screen name="Home" component={LandingPage} options={{headerShown:false,}} />
+          <Stack.Screen name="Login" component={LandingPage} options={{headerShown:false,}} />
             <Stack.Screen name="SignIn" component={LoginScreen} options={{headerShown:false}} />
           </Stack.Group>
+          <Stack.Group>
+            <Stack.Screen name= "Home" component={HomeScreen}/>
+          </Stack.Group>
+  
+          
         </Stack.Navigator>
       </NavigationContainer>
       <StatusBar style="auto" />
