@@ -14,7 +14,7 @@ export default function LandingPage() {
         <Text style={styles.heading}>ACO-Based Route Finder</Text>
         <Text style={styles.subheading}>Find your best route using ACO Algorithm</Text>
         <Text style={styles.subheading2}>with your own device!</Text>
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('SignIn')}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("SignIn")}>
           <Text style={styles.buttonText}>Lets Get Started</Text>
         </TouchableOpacity>
       </View>

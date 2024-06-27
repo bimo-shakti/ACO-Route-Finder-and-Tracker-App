@@ -59,7 +59,7 @@ const LoginScreen = ({ navigation }) => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
       if (user) {
-        navigation.replace('Home');
+        navigation.replace('beranda');
       }
     });
 
