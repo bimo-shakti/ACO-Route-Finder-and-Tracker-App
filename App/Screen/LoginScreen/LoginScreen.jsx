@@ -36,7 +36,7 @@ const AuthScreen = ({ email, setEmail, password, setPassword, isLogin, setIsLogi
           secureTextEntry
         />
         <View style={styles.buttonContainer}>
-          <Button style={styles.buttonTitle} title={isLogin ? 'Sign In' : 'Sign Up'} onPress={handleAuthentication} color="#D1D8C5" />
+          <Button title={isLogin ? 'Sign In' : 'Sign Up'} onPress={handleAuthentication} color="#7AB2B2"  />
         </View>
         <View style={styles.bottomContainer}>
           <Text style={styles.toggleText} onPress={() => setIsLogin(!isLogin)}>
@@ -104,17 +104,17 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.PRIMARY,
   },
   authContainer: {
-    width: '80%',
-    maxWidth: 400,
-    backgroundColor: Colors.GRAY,
-    padding: 17,
+    width: '100%',
+    maxWidth: 600,
+    backgroundColor: Colors.BLUEGREEN,
+    padding: 18,
     borderRadius: 10,
     elevation: 10,
   },
   title: {
-    fontSize: 23,
+    fontSize: 20,
     color: Colors.BLACK,
-    fontFamily: 'ReadexPro-medium',
+    fontFamily: 'ReadexPro',
     marginBottom: 15,
     textAlign: 'center',
   },
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     marginBottom: 16,
     padding: 8,
-    borderRadius: 99,
+    borderRadius: 1,
   },
   buttonContainer: {
     fontFamily: 'ReadexPro',

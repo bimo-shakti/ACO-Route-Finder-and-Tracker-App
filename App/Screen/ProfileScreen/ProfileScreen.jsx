@@ -18,7 +18,7 @@ export default function ProfileScreen ({ navigation }) {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>Welcome, {user.email}!</Text>
-        <Button style={styles.button}  title="Sign Out" onPress={handleSignOut} color="#e74c3c" />
+        <Button title="Sign Out" onPress={handleSignOut} color="#e74c3c" />
       </View>
     );
   }

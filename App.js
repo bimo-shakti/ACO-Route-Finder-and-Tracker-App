@@ -11,6 +11,7 @@ import Colors from './App/Utils/Colors';
 import HomeScreen from './App/Screen/HomeScreen/HomeScreen';
 import ProfileScreen from './App/Screen/ProfileScreen/ProfileScreen';
 
+
 SplashScreen.preventAutoHideAsync();
 
 const Stack = createStackNavigator();
@@ -39,8 +40,8 @@ export default function App() {
           <Stack.Group>
             <Stack.Screen name="Home" component={LandingPage} options={{headerShown:false,}} />
             <Stack.Screen name="SignIn" component={LoginScreen} options={{headerShown:false}} />
-            <Stack.Screen name="beranda" component={HomeScreen} />
-            <Stack.Screen name="profile" component={ProfileScreen}/>
+            <Stack.Screen name="beranda" component={HomeScreen} options={{headerShown:false}}/> 
+            <Stack.Screen name="Profile" component={ProfileScreen}/>
           </Stack.Group>
         </Stack.Navigator>
       </NavigationContainer>

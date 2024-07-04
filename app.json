@@ -13,14 +13,18 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "runtimeVersion": {
+        "policy": "appVersion"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.bimo_shakti.ACORouteFinderandTrackerApp"
+      "package": "com.bimo_shakti.ACORouteFinderandTrackerApp",
+      "runtimeVersion": "1.0.0"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -32,6 +36,9 @@
       "eas": {
         "projectId": "be8f78b4-d446-44c2-a236-2da613d539f3"
       }
+    },
+    "updates": {
+      "url": "https://u.expo.dev/be8f78b4-d446-44c2-a236-2da613d539f3"
     }
   }
 }
